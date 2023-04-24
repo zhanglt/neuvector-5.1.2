@@ -653,7 +653,7 @@ static int exit_monitor(void)
     g_procs[PROC_DP].active = false;
     g_procs[PROC_AGENT].active = false;
     g_procs[PROC_SCANNER_STANDALONE].active = false;
-
+    g_procs[PROC_CTRL_OPA].active=false;
     signal(SIGCHLD, SIG_DFL);
 
     switch (g_mode) {
