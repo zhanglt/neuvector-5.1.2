@@ -1,0 +1,181 @@
+2023.05.26 16:42:08 INFO  Started: Metals version 0.11.12 in workspace '/opt/nv/neuvector' for client Visual Studio Code 1.73.1.
+May 26, 2023 4:42:08 PM org.flywaydb.core.internal.license.VersionPrinter printVersionOnly
+INFO: Flyway Community Edition 9.16.3 by Redgate
+May 26, 2023 4:42:08 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: See release notes here: https://rd.gt/416ObMi
+May 26, 2023 4:42:08 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: 
+May 26, 2023 4:42:08 PM org.flywaydb.core.internal.database.base.BaseDatabaseType createDatabase
+INFO: Database: jdbc:h2:file:/opt/nv/neuvector/.metals/metals (H2 2.1)
+May 26, 2023 4:42:08 PM org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory allAppliedMigrations
+INFO: Schema history table "PUBLIC"."flyway_schema_history" does not exist yet
+May 26, 2023 4:42:08 PM org.flywaydb.core.internal.command.DbValidate validate
+INFO: Successfully validated 4 migrations (execution time 00:00.016s)
+May 26, 2023 4:42:08 PM org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory create
+INFO: Creating Schema History table "PUBLIC"."flyway_schema_history" ...
+May 26, 2023 4:42:08 PM org.flywaydb.core.internal.command.DbMigrate migrateGroup
+INFO: Current version of schema "PUBLIC": << Empty Schema >>
+May 26, 2023 4:42:08 PM org.flywaydb.core.internal.command.DbMigrate doMigrateGroup
+INFO: Migrating schema "PUBLIC" to version "1 - Create tables"
+May 26, 2023 4:42:08 PM org.flywaydb.core.internal.command.DbMigrate doMigrateGroup
+INFO: Migrating schema "PUBLIC" to version "2 - Server discovery"
+May 26, 2023 4:42:08 PM org.flywaydb.core.internal.command.DbMigrate doMigrateGroup
+INFO: Migrating schema "PUBLIC" to version "3 - Jar symbols"
+May 26, 2023 4:42:08 PM org.flywaydb.core.internal.command.DbMigrate doMigrateGroup
+INFO: Migrating schema "PUBLIC" to version "4 - Fingerprints"
+May 26, 2023 4:42:08 PM org.flywaydb.core.internal.command.DbMigrate logSummary
+INFO: Successfully applied 4 migrations to schema "PUBLIC", now at version v4 (execution time 00:00.051s)
+2023.05.26 16:42:09 INFO  time: initialize in 0.65s
+2023.05.26 16:42:09 WARN  Build server is not auto-connectable.
+2023.05.26 16:42:09 WARN  no build tool detected in workspace '/opt/nv/neuvector'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2023.05.26 16:42:22 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/Api.scala
+2023.05.26 16:42:41 INFO  no build target found for /opt/nv/manager/admin/src/main/scala/com/neu/api/Api.scala. Using presentation compiler with project's scala-library version: 3.2.2
+May 26, 2023 4:42:42 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1
+2023.05.26 16:42:44 INFO  time: code lens generation in 1.8s
+Exception in thread "pool-3-thread-1" java.lang.Error: java.lang.InterruptedException
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1155)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.InterruptedException
+	at scala.meta.internal.metals.FutureCancelToken.checkCanceled(FutureCancelToken.scala:29)
+	at scala.meta.internal.pc.CompilerAccess.onCompilerJobQueue$$anonfun$1(CompilerAccess.scala:195)
+	at scala.meta.internal.pc.CompilerJobQueue$Job.run(CompilerJobQueue.scala:152)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	... 2 more
+May 26, 2023 4:42:44 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6
+May 26, 2023 4:42:44 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 5
+May 26, 2023 4:42:44 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2
+May 26, 2023 4:42:44 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 7
+May 26, 2023 4:42:44 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4
+2023.05.26 16:42:44 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/Api.scala
+May 26, 2023 4:42:44 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 26
+May 26, 2023 4:42:44 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 25
+May 26, 2023 4:42:44 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 24
+2023.05.26 16:42:44 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/Api.scala
+2023.05.26 16:42:51 INFO  Shutting down server
+2023.05.26 16:42:51 INFO  shutting down Metals
+2023.05.26 16:42:51 INFO  Exiting server
+2023.05.26 16:43:35 INFO  Started: Metals version 0.11.12 in workspace '/opt/nv/neuvector' for client Visual Studio Code 1.73.1.
+May 26, 2023 4:43:36 PM org.flywaydb.core.internal.license.VersionPrinter printVersionOnly
+INFO: Flyway Community Edition 9.16.3 by Redgate
+May 26, 2023 4:43:36 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: See release notes here: https://rd.gt/416ObMi
+May 26, 2023 4:43:36 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: 
+May 26, 2023 4:43:36 PM org.flywaydb.core.internal.database.base.BaseDatabaseType createDatabase
+INFO: Database: jdbc:h2:file:/opt/nv/neuvector/.metals/metals (H2 2.1)
+May 26, 2023 4:43:36 PM org.flywaydb.core.internal.command.DbValidate validate
+INFO: Successfully validated 4 migrations (execution time 00:00.023s)
+May 26, 2023 4:43:36 PM org.flywaydb.core.internal.command.DbMigrate migrateGroup
+INFO: Current version of schema "PUBLIC": 4
+May 26, 2023 4:43:36 PM org.flywaydb.core.internal.command.DbMigrate logSummary
+INFO: Schema "PUBLIC" is up to date. No migration necessary.
+2023.05.26 16:43:36 INFO  time: initialize in 0.62s
+2023.05.26 16:43:36 WARN  Build server is not auto-connectable.
+2023.05.26 16:43:36 WARN  no build tool detected in workspace '/opt/nv/neuvector'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2023.05.26 16:43:36 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/Api.scala
+2023.05.26 16:43:39 INFO  no build target found for /opt/nv/manager/admin/src/main/scala/com/neu/api/Api.scala. Using presentation compiler with project's scala-library version: 3.2.2
+2023.05.26 16:44:10 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/AuthenticationService.scala
+May 26, 2023 4:44:11 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 28
+May 26, 2023 4:44:11 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 30
+May 26, 2023 4:44:11 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 27
+Exception in thread "pool-3-thread-1" java.lang.Error: java.lang.InterruptedException
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1155)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.InterruptedException
+	at scala.meta.internal.metals.FutureCancelToken.checkCanceled(FutureCancelToken.scala:29)
+	at scala.meta.internal.pc.CompilerAccess.onCompilerJobQueue$$anonfun$1(CompilerAccess.scala:195)
+	at scala.meta.internal.pc.CompilerJobQueue$Job.run(CompilerJobQueue.scala:152)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	... 2 more
+Exception in thread "pool-3-thread-2" java.lang.Error: java.lang.InterruptedException
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1155)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.InterruptedException
+	at scala.meta.internal.metals.FutureCancelToken.checkCanceled(FutureCancelToken.scala:29)
+	at scala.meta.internal.pc.CompilerAccess.onCompilerJobQueue$$anonfun$1(CompilerAccess.scala:195)
+	at scala.meta.internal.pc.CompilerJobQueue$Job.run(CompilerJobQueue.scala:152)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	... 2 more
+2023.05.26 16:44:14 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/DefaultJsonFormats.scala
+2023.05.26 16:44:14 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/RiskService.scala
+2023.05.26 16:44:15 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/Services.scala
+2023.05.26 16:44:27 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/BaseService.scala
+2023.05.26 16:44:32 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/Services.scala
+2023.05.26 16:44:43 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/web/Rest.scala
+2023.05.26 16:44:45 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/web/Web.scala
+2023.05.26 16:44:47 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/web/StaticResources.scala
+2023.05.26 16:45:00 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/core/ClientSslConfig.scala
+2023.05.26 16:45:04 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/core/MySslConfiguration.scala
+2023.05.26 16:45:11 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/AuthenticationService.scala
+2023.05.26 16:45:12 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/BaseService.scala
+2023.05.26 16:45:12 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/ClusterService.scala
+2023.05.26 16:45:12 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/DashboardService.scala
+May 26, 2023 4:45:13 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 137
+2023.05.26 16:45:13 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/DefaultJsonFormats.scala
+2023.05.26 16:45:15 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/DeviceService.scala
+2023.05.26 16:45:18 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/RiskService.scala
+2023.05.26 16:46:19 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/Services.scala
+2023.05.26 16:46:20 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/WorkloadService.scala
+2023.05.26 17:17:46 INFO  Shutting down server
+2023.05.26 17:17:46 INFO  shutting down Metals
+2023.05.26 17:17:46 INFO  Exiting server
+2023.05.26 21:12:47 INFO  Started: Metals version 0.11.12 in workspace '/opt/nv/neuvector' for client Visual Studio Code 1.73.1.
+May 26, 2023 9:12:47 PM org.flywaydb.core.internal.license.VersionPrinter printVersionOnly
+INFO: Flyway Community Edition 9.16.3 by Redgate
+May 26, 2023 9:12:47 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: See release notes here: https://rd.gt/416ObMi
+May 26, 2023 9:12:47 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: 
+May 26, 2023 9:12:48 PM org.flywaydb.core.internal.database.base.BaseDatabaseType createDatabase
+INFO: Database: jdbc:h2:file:/opt/nv/neuvector/.metals/metals (H2 2.1)
+May 26, 2023 9:12:48 PM org.flywaydb.core.internal.command.DbValidate validate
+INFO: Successfully validated 4 migrations (execution time 00:00.023s)
+May 26, 2023 9:12:48 PM org.flywaydb.core.internal.command.DbMigrate migrateGroup
+INFO: Current version of schema "PUBLIC": 4
+May 26, 2023 9:12:48 PM org.flywaydb.core.internal.command.DbMigrate logSummary
+INFO: Schema "PUBLIC" is up to date. No migration necessary.
+2023.05.26 21:12:48 INFO  time: initialize in 1.06s
+2023.05.26 21:12:49 WARN  Build server is not auto-connectable.
+2023.05.26 21:12:49 WARN  no build tool detected in workspace '/opt/nv/neuvector'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2023.05.26 21:35:10 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/PolicyService.scala
+2023.05.26 21:35:14 INFO  no build target found for /opt/nv/manager/admin/src/main/scala/com/neu/api/PolicyService.scala. Using presentation compiler with project's scala-library version: 3.2.2
+2023.05.26 21:35:17 INFO  time: code lens generation in 2.52s
+2023.05.27 10:50:23 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/Api.scala
+2023.05.28 09:15:49 INFO  Started: Metals version 0.11.12 in workspace '/opt/nv/neuvector' for client Visual Studio Code 1.73.1.
+May 28, 2023 9:15:49 AM org.flywaydb.core.internal.license.VersionPrinter printVersionOnly
+INFO: Flyway Community Edition 9.16.3 by Redgate
+May 28, 2023 9:15:49 AM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: See release notes here: https://rd.gt/416ObMi
+May 28, 2023 9:15:49 AM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: 
+May 28, 2023 9:15:50 AM org.flywaydb.core.internal.database.base.BaseDatabaseType createDatabase
+INFO: Database: jdbc:h2:file:/opt/nv/neuvector/.metals/metals (H2 2.1)
+May 28, 2023 9:15:50 AM org.flywaydb.core.internal.command.DbValidate validate
+INFO: Successfully validated 4 migrations (execution time 00:00.034s)
+May 28, 2023 9:15:50 AM org.flywaydb.core.internal.command.DbMigrate migrateGroup
+INFO: Current version of schema "PUBLIC": 4
+May 28, 2023 9:15:50 AM org.flywaydb.core.internal.command.DbMigrate logSummary
+INFO: Schema "PUBLIC" is up to date. No migration necessary.
+2023.05.28 09:15:50 INFO  time: initialize in 0.98s
+2023.05.28 09:15:50 WARN  Build server is not auto-connectable.
+2023.05.28 09:15:50 WARN  no build tool detected in workspace '/opt/nv/neuvector'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+May 28, 2023 6:04:46 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+May 28, 2023 6:04:52 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
