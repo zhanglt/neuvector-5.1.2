@@ -618,9 +618,9 @@ check_3_23() {
 
 check_3_24() {
   local id="3.24"
-  local desc="Ensure that the Containerd socket file permissions are set to 660 or more restrictively (Automated)"
-  local remediation="You should run the following command: chmod 660 /run/containerd/containerd.sock. This sets the file permissions for this file to 660."
-  local remediationImpact="None."
+  local desc="确保 Containerd 套接字文件权限设置为 660 或更多限制 (Automated)"
+  local remediation="您应该运行以下命令：chmod 660 /run/containerd/containerd.sock。 这会将此文件的文件权限设置为 660。"
+  local remediationImpact="None"
   local check="$id - $desc"
   starttestjson "$id" "$desc"
 

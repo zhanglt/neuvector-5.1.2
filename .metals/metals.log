@@ -224,3 +224,98 @@ INFO: Schema "PUBLIC" is up to date. No migration necessary.
 2023.05.30 09:29:23 INFO  time: initialize in 0.71s
 2023.05.30 09:29:23 WARN  Build server is not auto-connectable.
 2023.05.30 09:29:23 WARN  no build tool detected in workspace '/opt/nv/neuvector'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2023.05.30 09:34:08 INFO  Shutting down server
+2023.05.30 09:34:08 INFO  shutting down Metals
+2023.05.30 09:34:08 INFO  Exiting server
+May 30, 2023 9:41:55 AM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+2023.05.30 11:19:18 INFO  Started: Metals version 0.11.12 in workspace '/opt/nv/neuvector' for client Visual Studio Code 1.73.1.
+May 30, 2023 11:19:18 AM org.flywaydb.core.internal.license.VersionPrinter printVersionOnly
+INFO: Flyway Community Edition 9.16.3 by Redgate
+May 30, 2023 11:19:18 AM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: See release notes here: https://rd.gt/416ObMi
+May 30, 2023 11:19:18 AM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: 
+May 30, 2023 11:19:18 AM org.flywaydb.core.internal.database.base.BaseDatabaseType createDatabase
+INFO: Database: jdbc:h2:file:/opt/nv/neuvector/.metals/metals (H2 2.1)
+May 30, 2023 11:19:19 AM org.flywaydb.core.internal.command.DbValidate validate
+INFO: Successfully validated 4 migrations (execution time 00:00.023s)
+May 30, 2023 11:19:19 AM org.flywaydb.core.internal.command.DbMigrate migrateGroup
+INFO: Current version of schema "PUBLIC": 4
+May 30, 2023 11:19:19 AM org.flywaydb.core.internal.command.DbMigrate logSummary
+INFO: Schema "PUBLIC" is up to date. No migration necessary.
+2023.05.30 11:19:19 INFO  time: initialize in 0.73s
+2023.05.30 11:19:19 WARN  Build server is not auto-connectable.
+2023.05.30 11:19:19 WARN  no build tool detected in workspace '/opt/nv/neuvector'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2023.05.30 11:24:06 INFO  Shutting down server
+2023.05.30 11:24:06 INFO  shutting down Metals
+2023.05.30 11:24:06 INFO  Exiting server
+2023.05.30 15:35:30 INFO  Shutting down server
+2023.05.30 15:35:30 INFO  shutting down Metals
+2023.05.30 15:35:30 INFO  Exiting server
+2023.05.30 19:04:48 INFO  Started: Metals version 0.11.12 in workspace '/opt/nv/neuvector' for client Visual Studio Code 1.73.1.
+May 30, 2023 7:04:48 PM org.flywaydb.core.internal.license.VersionPrinter printVersionOnly
+INFO: Flyway Community Edition 9.16.3 by Redgate
+May 30, 2023 7:04:48 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: See release notes here: https://rd.gt/416ObMi
+May 30, 2023 7:04:48 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: 
+May 30, 2023 7:04:49 PM org.flywaydb.core.internal.database.base.BaseDatabaseType createDatabase
+INFO: Database: jdbc:h2:file:/opt/nv/neuvector/.metals/metals (H2 2.1)
+May 30, 2023 7:04:49 PM org.flywaydb.core.internal.command.DbValidate validate
+INFO: Successfully validated 4 migrations (execution time 00:00.023s)
+May 30, 2023 7:04:49 PM org.flywaydb.core.internal.command.DbMigrate migrateGroup
+INFO: Current version of schema "PUBLIC": 4
+May 30, 2023 7:04:49 PM org.flywaydb.core.internal.command.DbMigrate logSummary
+INFO: Schema "PUBLIC" is up to date. No migration necessary.
+2023.05.30 19:04:49 INFO  time: initialize in 0.67s
+2023.05.30 19:04:49 WARN  Build server is not auto-connectable.
+2023.05.30 19:04:49 WARN  no build tool detected in workspace '/opt/nv/neuvector'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2023.05.30 19:04:55 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/Api.scala
+2023.05.30 19:04:58 INFO  no build target found for /opt/nv/manager/admin/src/main/scala/com/neu/api/Api.scala. Using presentation compiler with project's scala-library version: 3.2.2
+May 30, 2023 7:04:59 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2
+2023.05.30 19:05:01 INFO  time: code lens generation in 2.01s
+2023.05.30 19:05:03 WARN  no build target for: /opt/nv/manager/admin/src/main/scala/com/neu/api/PolicyService.scala
+2023.05.30 19:26:18 INFO  Started: Metals version 0.11.12 in workspace '/opt/nv/neuvector' for client Visual Studio Code 1.73.1.
+May 30, 2023 7:26:19 PM org.flywaydb.core.internal.license.VersionPrinter printVersionOnly
+INFO: Flyway Community Edition 9.16.3 by Redgate
+May 30, 2023 7:26:19 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: See release notes here: https://rd.gt/416ObMi
+May 30, 2023 7:26:19 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: 
+May 30, 2023 7:26:19 PM org.flywaydb.core.internal.database.base.BaseDatabaseType createDatabase
+INFO: Database: jdbc:h2:file:/opt/nv/neuvector/.metals/metals (H2 2.1)
+May 30, 2023 7:26:19 PM org.flywaydb.core.internal.command.DbValidate validate
+INFO: Successfully validated 4 migrations (execution time 00:00.027s)
+May 30, 2023 7:26:19 PM org.flywaydb.core.internal.command.DbMigrate migrateGroup
+INFO: Current version of schema "PUBLIC": 4
+May 30, 2023 7:26:19 PM org.flywaydb.core.internal.command.DbMigrate logSummary
+INFO: Schema "PUBLIC" is up to date. No migration necessary.
+2023.05.30 19:26:19 INFO  time: initialize in 0.41s
+2023.05.30 19:26:19 WARN  Build server is not auto-connectable.
+2023.05.30 19:26:19 WARN  no build tool detected in workspace '/opt/nv/neuvector'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2023.05.30 19:31:05 INFO  Shutting down server
+2023.05.30 19:31:05 INFO  shutting down Metals
+2023.05.30 19:31:05 INFO  Exiting server
+2023.05.30 19:54:55 INFO  Started: Metals version 0.11.12 in workspace '/opt/nv/neuvector' for client Visual Studio Code 1.73.1.
+May 30, 2023 7:54:56 PM org.flywaydb.core.internal.license.VersionPrinter printVersionOnly
+INFO: Flyway Community Edition 9.16.3 by Redgate
+May 30, 2023 7:54:56 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: See release notes here: https://rd.gt/416ObMi
+May 30, 2023 7:54:56 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: 
+May 30, 2023 7:54:56 PM org.flywaydb.core.internal.database.base.BaseDatabaseType createDatabase
+INFO: Database: jdbc:h2:file:/opt/nv/neuvector/.metals/metals (H2 2.1)
+May 30, 2023 7:54:56 PM org.flywaydb.core.internal.command.DbValidate validate
+INFO: Successfully validated 4 migrations (execution time 00:00.024s)
+May 30, 2023 7:54:56 PM org.flywaydb.core.internal.command.DbMigrate migrateGroup
+INFO: Current version of schema "PUBLIC": 4
+May 30, 2023 7:54:56 PM org.flywaydb.core.internal.command.DbMigrate logSummary
+INFO: Schema "PUBLIC" is up to date. No migration necessary.
+2023.05.30 19:54:56 INFO  time: initialize in 0.67s
+2023.05.30 19:54:56 WARN  Build server is not auto-connectable.
+2023.05.30 19:54:56 WARN  no build tool detected in workspace '/opt/nv/neuvector'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2023.05.30 19:59:43 INFO  Shutting down server
+2023.05.30 19:59:43 INFO  shutting down Metals
+2023.05.30 19:59:43 INFO  Exiting server

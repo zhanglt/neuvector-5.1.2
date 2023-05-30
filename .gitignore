@@ -3,3 +3,11 @@
 .vscode
 *.code-workspace
 *.bak
+ .metals/metals.lock.db
+ .metals/metals.log
+ .metals/metals.mv.db
+ agent/agent
+ controller/controller
+ dp/dp
+ monitor/monitor
+ tools/nstools/nstools
