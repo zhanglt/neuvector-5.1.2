@@ -671,6 +671,7 @@ static int exit_monitor(void)
         stop_proc(PROC_CTRL, SIGTERM, true);
         // disable scanner in controller
         // stop_proc(PROC_SCANNER, SIGTERM, true);
+        stop_proc(PROC_CTRL_OPA, SIGTERM, true);
         ret = system(SCRIPT_TEARDOWN);
         break;
     case MODE_AGENT:
@@ -682,6 +683,7 @@ static int exit_monitor(void)
         stop_proc(PROC_AGENT, SIGTERM, true);
         stop_proc(PROC_DP, SIGTERM, false);
         stop_proc(PROC_CTRL, SIGTERM, true);
+        stop_proc(PROC_CTRL_OPA, SIGTERM, true);
         // disable scanner in controller
         // stop_proc(PROC_SCANNER, SIGTERM, true);
         ret = system(SCRIPT_TEARDOWN);
