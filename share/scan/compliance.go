@@ -2941,8 +2941,30 @@ var cis_items = map[string]api.RESTBenchCheck{
 		Profile:     "Level 1",
 		Automated:   false,
 		Description: "确保 /etc/default/docker 文件权限设置为 644 或更多限制",
-		Remediation: "",
+		Remediation: "您应该运行以下命令：chown root:root /run/containerd/containerd.sock。这会将文件的所有权和组所有权设置为 root.",
 	},
+	"D.3.23": api.RESTBenchCheck{
+                TestNum:     "D.3.23",
+                Type:        "host",
+                Category:    "docker",
+                Scored:      true,
+                Profile:     "Level 1",
+                Automated:   false,
+                Description: "确保 Containerd 套接字文件所有权设置为 root:root(自动)",
+                Remediation: "您应该运行以下命令：chown root:root /run/containerd/containerd.sock。这会将文件的所有权和组所有权设置为 root.",
+        },
+	 "D.3.24": api.RESTBenchCheck{
+                TestNum:     "D.3.43",
+                Type:        "host",
+                Category:    "docker",
+                Scored:      true,
+                Profile:     "Level 1",
+                Automated:   false,
+                Description: "确保 Containerd 套接字文件权限设置为 660 或更严格（自动）",
+                Remediation: "您应该运行以下命令：chmod 660 /run/containerd/containerd.sock。这会将此文件的文件权限设置为 660.",
+        },
+
+
 	"D.4.1": api.RESTBenchCheck{
 		TestNum:     "D.4.1",
 		Type:        "host",
