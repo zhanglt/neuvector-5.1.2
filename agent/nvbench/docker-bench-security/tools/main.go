@@ -27,15 +27,15 @@ func t(text string, t *translator.Translator) string {
 func main() {
 	//需要翻译的文件列表
 	var tmpl []string
-	//tmpl = append(tmpl, "1_host_configuration.sh")
-	//tmpl = append(tmpl, "2_docker_daemon_configuration.sh")
-	//tmpl = append(tmpl, "3_docker_daemon_configuration_files.sh")
-	//tmpl = append(tmpl, "4_container_images.sh")
-	//tmpl = append(tmpl, "5_container_runtime.sh")
-	//tmpl = append(tmpl, "6_docker_security_operations.sh")
+	tmpl = append(tmpl, "1_host_configuration.sh")
+	tmpl = append(tmpl, "2_docker_daemon_configuration.sh")
+	tmpl = append(tmpl, "3_docker_daemon_configuration_files.sh")
+	tmpl = append(tmpl, "4_container_images.sh")
+	tmpl = append(tmpl, "5_container_runtime.sh")
+	tmpl = append(tmpl, "6_docker_security_operations.sh")
 	tmpl = append(tmpl, "7_docker_swarm_configuration.sh")
-	//tmpl = append(tmpl, "8_docker_enterprise_configuration.sh")
-	//tmpl = append(tmpl, "99_community_checks.sh")
+	tmpl = append(tmpl, "8_docker_enterprise_configuration.sh")
+	tmpl = append(tmpl, "99_community_checks.sh")
 	c := translator.Config{
 		Proxy: "http://127.0.0.1:10809",
 	}
