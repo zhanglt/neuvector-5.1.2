@@ -151,7 +151,7 @@ func newBench(platform, flavor string) *Bench {
 		kubeCisCmds:     make(map[string]string),
 		hostScript:      &share.CLUSCustomCheckGroup{},
 		hostWarnItems:   make(map[string]share.CLUSAuditBenchItem),
-		dockerCISVer:    "1.2.0",
+		dockerCISVer:    "1.5.0",
 	}
 
 	// Let main program to start bench
@@ -370,8 +370,6 @@ func (b *Bench) doKubeBench(masterScript, workerScript, remediation string) (err
 			b.putBenchReport(Host.ID, share.BenchKubeWorker, list, share.BenchStatusFinished)
 		}
 	}
-
-
 
 	return errMaster, errWorker
 }
@@ -708,6 +706,7 @@ func (b *Bench) kubeCheckPrerequisites() (error, error) {
 }
 
 func (b *Bench) dockerCheckPrerequisites() error {
+	// 检测host.tmpl 和 container.tmpl模版文件是否存在
 	if _, err := os.Stat(srcHostBenchSh); os.IsNotExist(err) {
 		return fmt.Errorf("Docker bench host template not exist")
 	}
@@ -772,7 +771,6 @@ func (b *Bench) runDockerHostBench() ([]byte, error) {
 		log.WithFields(log.Fields{"error": err, "msg": errb.String()}).Error("Done")
 		return nil, err
 	}
-
 	return out, nil
 }
 
@@ -780,7 +778,7 @@ func (b *Bench) doDockerHostBench() error {
 	log.Debug()
 
 	b.putBenchReport(Host.ID, share.BenchDockerHost, nil, share.BenchStatusRunning)
-
+	// 获取 bench结果
 	out, err := b.runDockerHostBench()
 	b.dockerHostDone = true
 
@@ -792,7 +790,9 @@ func (b *Bench) doDockerHostBench() error {
 
 	log.Info("Running benchmark checks done")
 
+	// 从bench结果中解析出 csi编号列表
 	list := b.getBenchMsg(out)
+
 	b.assignDockerBenchMeta(list)
 
 	b.logHostResult(list)
@@ -891,6 +891,7 @@ func (b *Bench) doContainerCustomCheck(wls []*share.CLUSWorkload) {
 	log.Debug("Running benchmark checks done")
 }
 
+// 自定义脚本
 func (b *Bench) doHostCustomCheck() {
 	log.Debug("")
 
