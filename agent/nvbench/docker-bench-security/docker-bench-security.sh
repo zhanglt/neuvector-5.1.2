@@ -2,12 +2,12 @@
 # --------------------------------------------------------------------------------------------
 # Docker Bench for Security
 #
-# Docker, Inc. (c) 2015-2021
+# Docker, Inc. (c) 2015-2022
 #
 # Checks for dozens of common best-practices around deploying Docker containers in production.
 # --------------------------------------------------------------------------------------------
 
-version='1.3.6'
+version='1.5.0'
 
 # Load dependencies
 . ./functions/functions_lib.sh
@@ -36,7 +36,7 @@ usage () {
   cat <<EOF
 Docker Bench for Security - Docker, Inc. (c) 2015-$(date +"%Y")
 Checks for dozens of common best-practices around deploying Docker containers in production.
-Based on the CIS Docker Benchmark 1.3.1.
+Based on the CIS Docker Benchmark 1.5.0.
 
 Usage: ${myname}.sh [OPTIONS]
 
@@ -163,7 +163,7 @@ main () {
     cis
   elif [ -z "$check" ]; then
     # No check defined but excludes defined set to calls in cis() function
-    check=$(sed -ne "/cis() {/,/}/{/{/d; /}/d; p}" functions/functions_lib.sh)
+    check=$(sed -ne "/cis() {/,/}/{/{/d; /}/d; p;}" functions/functions_lib.sh)
   fi
 
   for c in $(echo "$check" | sed "s/,/ /g"); do
@@ -183,7 +183,7 @@ main () {
         continue
       elif echo "$c" | grep -vE 'check_[0-9]|check_[a-z]' 2>/dev/null 1>&2; then
         # Function not a check, fill loop_checks with all check from function
-        loop_checks="$(sed -ne "/$c() {/,/}/{/{/d; /}/d; p}" functions/functions_lib.sh)"
+        loop_checks="$(sed -ne "/$c() {/,/}/{/{/d; /}/d; p;}" functions/functions_lib.sh)"
       else
         # Just one check
         loop_checks="$c"

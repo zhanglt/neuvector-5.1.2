@@ -137,6 +137,7 @@ container_images() {
   check_4_9
   check_4_10
   check_4_11
+  check_4_12
   check_4_end
 }
 
@@ -331,6 +332,11 @@ req_programs() {
   for p in $1; do
     command -v "$p" >/dev/null 2>&1 || { printf "Required program not found: %s\n" "$p"; exit 1; }
   done
+  if command -v jq >/dev/null 2>&1; then
+    HAVE_JQ=true
+  else
+    HAVE_JQ=false
+  fi
   if command -v ss >/dev/null 2>&1; then
     netbin=ss
     return
@@ -437,7 +443,11 @@ get_docker_configuration_file_args() {
 
   get_docker_configuration_file
 
-  grep "$OPTION" "$CONFIG_FILE" | sed 's/.*://g' | tr -d '" ',
+  if "$HAVE_JQ"; then
+    jq --monochrome-output --raw-output ".[\"${OPTION}\"]" "$CONFIG_FILE"
+  else
+    cat "$CONFIG_FILE" | tr { '\n' | tr , '\n' | tr } '\n' | grep "$OPTION" | sed 's/.*://g' | tr -d '" ',
+  fi
 }
 
 get_service_file() {
@@ -465,7 +475,7 @@ yell "# ------------------------------------------------------------------------
 # Docker, Inc. (c) 2015-$(date +"%Y")
 #
 # Checks for dozens of common best-practices around deploying Docker containers in production.
-# Based on the CIS Docker Benchmark 1.3.1.
+# Based on the CIS Docker Benchmark 1.5.0.
 # --------------------------------------------------------------------------------------------"
 }
 #!/bin/bash
@@ -1392,12 +1402,15 @@ check_5_11() {
   fail=0
   cpu_unlimited_containers=""
   for c in $containers; do
-    shares=$(docker inspect --format '{{ .HostConfig.CpuShares }}' "$c")
+    cpushares=$(docker inspect --format '{{ .HostConfig.CpuShares }}' "$c")
+    nanocpus=$(docker inspect --format '{{ .HostConfig.NanoCpus }}' "$c")
+
     if docker inspect --format '{{ .Config.CpuShares }}' "$c" 2> /dev/null 1>&2; then
-      shares=$(docker inspect --format '{{ .Config.CpuShares }}' "$c")
+      cpushares=$(docker inspect --format '{{ .Config.CpuShares }}' "$c")
+      nanocpus=$(docker inspect --format '{{ .Config.NanoCpus }}' "$c")
     fi
 
-    if [ "$shares" = "0" ]; then
+    if [ "$cpushares" = "0" ] && [ "$nanocpus" = "0" ]; then
       # If it's the first container, fail the test
       if [ $fail -eq 0 ]; then
         warn -s "$check"
