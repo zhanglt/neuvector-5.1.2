@@ -201,6 +201,33 @@ cat check_worker.sh >> $WORKER
 cat kubernetes-cis-benchmark/1.6.0/worker/4_worker_nodes.sh >> $WORKER
 echo  "exit 0;" >> $WORKER
 
+#kubernetes cis 1.7.0
+MASTER="kube_master_1_7_0.tmpl"
+WORKER="kube_worker_1_7_0.tmpl"
+echo "==> generate $MASTER and $WORKER"
+cat kubernetes-cis-benchmark/helper1_7_0.sh > $MASTER
+
+echo "CIS_APISERVER_CMD=\"<<<.$REPLACE_CIS_APISERVER_CMD>>>\"" >> $MASTER
+echo "CIS_MANAGER_CMD=\"<<<.$REPLACE_CIS_MANAGER_CMD>>>\"" >> $MASTER
+echo "CIS_SCHEDULER_CMD=\"<<<.$REPLACE_CIS_SCHEDULER_CMD>>>\"" >> $MASTER
+echo "CIS_ETCD_CMD=\"<<<.$REPLACE_CIS_ETCD_CMD>>>\"" >> $MASTER
+echo "CIS_PROXY_CMD=\"<<<.$REPLACE_CIS_PROXY_CMD>>>\"" >> $MASTER
+
+cat check_master.sh >> $MASTER
+cat kubernetes-cis-benchmark/1.7.0/master/1_control_plane_components.sh >> $MASTER
+cat kubernetes-cis-benchmark/1.7.0/master/2_etcd.sh >> $MASTER
+cat kubernetes-cis-benchmark/1.7.0/master/3_control_plane_configuration.sh >> $MASTER
+cat kubernetes-cis-benchmark/1.7.0/master/5_policies.sh >> $MASTER
+echo  "exit 0;" >> $MASTER
+
+cat kubernetes-cis-benchmark/helper1_7_0.sh > $WORKER
+echo "CIS_KUBELET_CMD=\"<<<.$REPLACE_CIS_KUBELET_CMD>>>\"" >> $WORKER
+echo "CIS_PROXY_CMD=\"<<<.$REPLACE_CIS_PROXY_CMD>>>\"" >> $WORKER
+cat check_worker.sh >> $WORKER
+cat kubernetes-cis-benchmark/1.7.0/worker/4_worker_nodes.sh >> $WORKER
+echo  "exit 0;" >> $WORKER
+
+
 #GKE cis 1.0.0
 MASTER="kube_master_gke_1_0_0.tmpl"
 WORKER="kube_worker_gke_1_0_0.tmpl"

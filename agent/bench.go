@@ -50,6 +50,9 @@ const (
 	kube160MasterTmpl   = srcSh + "kube_master_1_6_0.tmpl"
 	kube160WorkerTmpl   = srcSh + "kube_worker_1_6_0.tmpl"
 	kube160Remediation  = srcSh + "kubecis_1_6_0.rem"
+	kube170MasterTmpl   = srcSh + "kube_master_1_7_0.tmpl"
+	kube170WorkerTmpl   = srcSh + "kube_worker_1_7_0.tmpl"
+	kube170Remediation  = srcSh + "kubecis_1_7_0.rem"
 	kubeGKEMasterTmpl   = srcSh + "kube_master_gke_1_0_0.tmpl"
 	kubeGKEWorkerTmpl   = srcSh + "kube_worker_gke_1_0_0.tmpl"
 	kubeGKERemediation  = srcSh + "kubecis_gke_1_0_0.rem"
@@ -238,11 +241,17 @@ func (b *Bench) BenchLoop() {
 					}
 				} else {
 					kVer, err := version.NewVersion(k8sVer)
+
 					if err != nil {
-						b.kubeCISVer = "1.6.0"
-						masterScript = kube160MasterTmpl
-						workerScript = kube160WorkerTmpl
-						remediation = kube160Remediation
+						b.kubeCISVer = "1.7.0"
+						masterScript = kube170MasterTmpl
+						workerScript = kube170WorkerTmpl
+						remediation = kube170Remediation
+					} else if kVer.Compare(version.Must(version.NewVersion("1.17"))) >= 0 {
+						b.kubeCISVer = "1.7.0"
+						masterScript = kube170MasterTmpl
+						workerScript = kube170WorkerTmpl
+						remediation = kube170Remediation
 					} else if kVer.Compare(version.Must(version.NewVersion("1.16"))) >= 0 {
 						b.kubeCISVer = "1.6.0"
 						masterScript = kube160MasterTmpl

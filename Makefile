@@ -40,6 +40,8 @@ copy_enf:
 	cp neuvector/agent/nvbench/kube_worker_1_5_1.tmpl ${STAGE_DIR}/usr/local/bin/
 	cp neuvector/agent/nvbench/kube_master_1_6_0.tmpl ${STAGE_DIR}/usr/local/bin/
 	cp neuvector/agent/nvbench/kube_worker_1_6_0.tmpl ${STAGE_DIR}/usr/local/bin/
+	cp neuvector/agent/nvbench/kube_master_1_7_0.tmpl ${STAGE_DIR}/usr/local/bin/
+	cp neuvector/agent/nvbench/kube_worker_1_7_0.tmpl ${STAGE_DIR}/usr/local/bin/
 	cp neuvector/agent/nvbench/kube_master_gke_1_0_0.tmpl ${STAGE_DIR}/usr/local/bin/
 	cp neuvector/agent/nvbench/kube_worker_gke_1_0_0.tmpl ${STAGE_DIR}/usr/local/bin/
 	cp neuvector/agent/nvbench/kube_master_ocp_4_3.tmpl ${STAGE_DIR}/usr/local/bin/
@@ -51,6 +53,7 @@ copy_enf:
 	cp neuvector/agent/nvbench/kubecis_1_4_1.rem ${STAGE_DIR}/usr/local/bin/
 	cp neuvector/agent/nvbench/kubecis_1_5_1.rem ${STAGE_DIR}/usr/local/bin/
 	cp neuvector/agent/nvbench/kubecis_1_6_0.rem ${STAGE_DIR}/usr/local/bin/
+	cp neuvector/agent/nvbench/kubecis_1_7_0.rem ${STAGE_DIR}/usr/local/bin/
 	cp neuvector/agent/nvbench/kubecis_gke_1_0_0.rem ${STAGE_DIR}/usr/local/bin/
 	cp neuvector/agent/nvbench/kubecis_ocp_4_5.rem ${STAGE_DIR}/usr/local/bin/
 	cp neuvector/agent/nvbench/kubecis_ocp_4_3.rem ${STAGE_DIR}/usr/local/bin/
