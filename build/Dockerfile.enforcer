@@ -7,7 +7,7 @@ COPY stage /
 # Labels for redhat
 ARG NV_TAG
 LABEL name="enforcer" \
-      vendor="NeuVector Inc." \
+      vendor="" \
       version=${NV_TAG} \
       release=${NV_TAG} \
       neuvector.image="neuvector/enforcer" \

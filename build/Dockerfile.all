@@ -6,7 +6,7 @@ COPY stage /
 
 ARG NV_TAG
 LABEL name="allinone" \
-      vendor="NeuVector Inc." \
+      vendor="" \
       version=${NV_TAG} \
       release=${NV_TAG} \
       neuvector.image="neuvector/allinone" \
