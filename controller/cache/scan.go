@@ -42,8 +42,7 @@ type regImageSummaryReport struct {
 var scannerCacheMap map[string]*scannerCache = make(map[string]*scannerCache)
 
 // grpc call should timeout in scanReqTimeout
-const scanReqTimeout = time.Second * 60
-const scanReqSafetyTimeOut = time.Second * 70 // should be longer than scanReqTimeout
+const scanReqTimeout = time.Second * 180
 
 const scannerCleanupPeriod = time.Duration(time.Minute * 1)
 const scannerClearnupTimeout = time.Second * 20
@@ -479,8 +478,10 @@ func scanDone(id string, objType share.ScanObjectType, report *share.CLUSScanRep
 		info.version = report.Version
 		info.cveDBCreateTime = report.CVEDBCreateTime
 		info.modules = report.Modules
-		info.signatureVerifiers = report.SignatureInfo.Verifiers
-		info.signatureVerificationTimestamp = report.SignatureInfo.VerificationTimestamp
+		if report.SignatureInfo != nil {
+			info.signatureVerifiers = report.SignatureInfo.Verifiers
+			info.signatureVerificationTimestamp = report.SignatureInfo.VerificationTimestamp
+		}
 
 		// Filter and count vulnerabilities
 		vpf := cacher.GetVulnerabilityProfileInterface(share.DefaultVulnerabilityProfileName)
