@@ -11,5 +11,10 @@ LABEL name="allinone" \
       release=${NV_TAG} \
       neuvector.image="neuvector/allinone" \
       neuvector.role="controller+enforcer+manager"
-
+ENV TZ=Asia/Shanghai
+RUN apk update \
+    && apk add tzdata \
+    && echo "${TZ}" > /etc/timezone \
+    && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
+    && rm /var/cache/apk/*
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
