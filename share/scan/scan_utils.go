@@ -197,7 +197,25 @@ func (s *ScanUtil) GetRunningPackages(id string, objType share.ScanObjectType, p
 		// but sometimes this file is not accessible.
 		files, hasPkgMgr = s.readRunningPackages(id, pid, "/usr/", kernel)
 	}
+	/*
+		if objType == share.ScanObjectType_HOST && os.Getenv("NV_SCANHOST_FORCE") == "true" {
+			// We may still have data when there is an error, such as timeout
+			data, err := s.getHostAppPkg("/log4j/log1") // 几乎这里启用并行处理，增加扫描
+			if err != nil {
+				log.WithFields(log.Fields{"data": len(data), "error": err}).Error("Error when getting host app packages")
+			}
+			if len(data) > 0 {
+				files = append(files, utils.TarFileInfo{AppFileName, data})
+			}
 
+			data, err = s.getHostAppPkg("/log4j/log2") // 几乎这里启用并行处理，增加扫描
+			if err != nil {
+				log.WithFields(log.Fields{"data": len(data), "error": err}).Error("Error when getting host app packages")
+			}
+			if len(data) > 0 {
+				files = append(files, utils.TarFileInfo{AppFileName, data})
+			}
+		}*/
 	if objType == share.ScanObjectType_CONTAINER {
 		// We may still have data when there is an error, such as timeout
 		data, err := s.getContainerAppPkg(pid)
@@ -234,10 +252,56 @@ func (s *ScanUtil) GetRunningPackages(id string, objType share.ScanObjectType, p
 	return buf.Bytes(), share.ScanErrorCode_ScanErrNone
 }
 
+func (s *ScanUtil) getHostAppPkg(path string) ([]byte, error) {
+	apps := NewScanApps(true)
+	exclDirs := utils.NewSet("bin", "boot", "dev", "proc", "run", "sys", "tmp")
+	rootPath := s.sys.ContainerFilePath(1, path)
+	log.WithFields(log.Fields{"rootPath": rootPath}).Info("容器目录遍历根目录")
+	rootLen := len(rootPath)
+
+	bTimeoutFlag := false
+
+	go func() {
+		time.Sleep(time.Duration(120) * time.Second)
+		bTimeoutFlag = true
+	}()
+
+	// recursive the possible node/jar directories
+	walkErr := filepath.Walk(rootPath, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			log.Info("--------------------err:", err)
+			return nil
+			//return err
+		}
+		if bTimeoutFlag {
+			return errors.New("Timeout")
+
+		}
+
+		if info.IsDir() {
+			inpath := path[rootLen:]
+			tokens := strings.Split(inpath, "/")
+			if len(tokens) > 0 && exclDirs.Contains(tokens[0]) {
+				return filepath.SkipDir
+			}
+			if utils.IsMountPoint(path) {
+				return filepath.SkipDir
+			}
+		} else if info.Mode().IsRegular() && info.Size() > 0 {
+			inpath := path[rootLen:]
+			apps.extractAppPkg(inpath, path)
+		}
+		return nil
+	})
+
+	return apps.marshal(), walkErr
+}
+
 func (s *ScanUtil) getContainerAppPkg(pid int) ([]byte, error) {
 	apps := NewScanApps(true)
 	exclDirs := utils.NewSet("bin", "boot", "dev", "proc", "run", "sys", "tmp")
 	rootPath := s.sys.ContainerFilePath(pid, "/")
+	//log.WithFields(log.Fields{"rootPath": rootPath}).Info("容器目录遍历根目录")
 	rootLen := len(rootPath)
 
 	bTimeoutFlag := false
@@ -952,7 +1016,7 @@ func GetAwsFuncPackages(fileName string) ([]*share.ScanAppPackage, error) {
 	return appPkg, nil
 }
 
-////////
+// //////
 type layerSize struct {
 	layer string
 	size  int64
@@ -979,14 +1043,16 @@ func sortLayersBySize(layerMap map[string]int64) []layerSize {
 
 // Download layers in parallels
 // Reducing memory by limiting its concurrent downloading tar size near to 400MB,
-//    which size information is provided from the Image Manifest Version 2, Schema 2.
+//
+//	which size information is provided from the Image Manifest Version 2, Schema 2.
+//
 // The download layers are sorted by descending layer's tar sizes
 // (1) if the tar size is greater than 500MB, it will be downloaded alone
 // (2) if concurrent download (accumulate) is greater than 400MB, the next download item will wait until there are sufficient resources
 // (3) the maximum accumulate is less 800MB (for example, 399.99MB + 399.98MB).
 // Note: docker uses the "maxConcurrentDownloads" (3)
-//       containerd uses the download altogether
 //
+//	containerd uses the download altogether
 const downloadThrottlingVolume = 400 * 1024 * 1024 // the average could be around this level, decompressed size could be 4x more
 func downloadLayers(ctx context.Context, layers []string, sizes map[string]int64, imgPath string,
 	layerReader func(ctx context.Context, layer string) (interface{}, int64, error)) (map[string]*downloadLayerResult, error) {
