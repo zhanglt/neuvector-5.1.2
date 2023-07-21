@@ -27,7 +27,6 @@ import (
 
 const procRootMountPoint = "/proc/%d/root"
 
-//
 func usage() {
 	fmt.Fprintf(os.Stderr, "usage: pathWalker [OPTIONS]\n")
 	flag.PrintDefaults()
@@ -42,13 +41,12 @@ type taskMain struct {
 	done     chan error
 }
 
-//
 func isPidValid(pid int) bool {
 	_, err := os.Stat(fmt.Sprintf("/proc/%d", pid))
 	return err == nil
 }
 
-/////////////
+// ///////////
 func InitTaskMain(workPath string, done chan error, sys *system.SystemTools) *taskMain {
 	tm := &taskMain{
 		ctx:      context.Background(),
@@ -59,8 +57,14 @@ func InitTaskMain(workPath string, done chan error, sys *system.SystemTools) *ta
 	return tm
 }
 
-////////////////////////
+// //////////////////////
 func main() {
+	//writer1 := &bytes.Buffer{}
+	//writer2 := os.Stdout
+	//writer3, _ := os.OpenFile("/var/log/pathWalker.txt", os.O_WRONLY|os.O_CREATE, 0755)
+
+	//log.SetOutput(io.MultiWriter(writer1, writer2, writer3))
+	//log.SetReportCaller(true)
 	log.SetOutput(os.Stdout)
 	log.SetLevel(log.InfoLevel)
 	log.SetFormatter(&utils.LogFormatter{Module: "WLK"})
@@ -92,6 +96,7 @@ func main() {
 		ppath := fmt.Sprintf("/proc/%d/exe", ppid)
 		if _, err := os.Stat(ppath); err == nil {
 			exe, err = os.Readlink(ppath)
+			//log.WithFields(log.Fields{"exe=os.readlink:": exe, "ppid": ppid}).Info("判断/proc/%d/exe")
 			if err == nil && strings.HasPrefix(exe, "/usr/local/bin/agent") {
 				pass = true
 			}
@@ -127,12 +132,13 @@ func main() {
 	log.WithFields(log.Fields{"workPath": workPath, "used": time.Now().Sub(start).Seconds(), "error": err}).Info("Exit")
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////////////////////////////
 func (tm *taskMain) ProcessRequest(walkType string) error {
 	jsonFile, err := os.Open(filepath.Join(tm.workPath, workerlet.RequestJson))
 	if err != nil {
 		return err
 	}
+	// 读取请求文件
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 	jsonFile.Close()
 
@@ -171,7 +177,7 @@ func (tm *taskMain) ProcessRequest(walkType string) error {
 	return errors.New(fmt.Sprintf("Invalid request: %s", string(byteValue)))
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////////////////////////////
 func (tm *taskMain) WalkPathTask(req workerlet.WalkPathRequest) {
 	var errorCnt int
 	var res = &workerlet.WalkPathResult{
@@ -283,6 +289,7 @@ func (tm *taskMain) WalkPathTask(req workerlet.WalkPathRequest) {
 	tm.done <- err
 }
 
+// 扫描目标 写入文件
 func (tm *taskMain) WalkPackageTask(req workerlet.WalkGetPackageRequest) {
 	var data share.ScanData
 	scanUtil := scan.NewScanUtil(tm.sys)

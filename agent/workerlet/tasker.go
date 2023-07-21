@@ -42,7 +42,7 @@ func NewWalkerTask(showDebug bool, sys *system.SystemTools) *Tasker {
 	return ts
 }
 
-//////
+// 将扫描请求内容写入文件
 func (ts *Tasker) putInputFile(request interface{}) (string, []string, error) {
 	var workingPath string
 	var args []string
@@ -75,6 +75,7 @@ func (ts *Tasker) putInputFile(request interface{}) (string, []string, error) {
 		if _, err := os.Stat(workingPath); err != nil { // not existed
 			args = append(args, "-u", uid)
 			os.MkdirAll(workingPath, os.ModePerm)
+			// 写入文件
 			if err = ioutil.WriteFile(filepath.Join(workingPath, RequestJson), data, 0644); err == nil {
 				return workingPath, args, nil
 			}
@@ -116,25 +117,24 @@ func (ts *Tasker) getResultFile(request interface{}, workingFolder string) ([]by
 	return nil, nil, errors.New("Invalid type")
 }
 
-
-//////
+// 调用/usr/local/bin/pathWalker 来完成扫描目标数据、扫描请求 写入文件，
 func (ts *Tasker) Run(request interface{}, cid string) ([]byte, []byte, error) {
 	if !ts.bEnable {
 		return nil, nil, fmt.Errorf("session ended")
 	}
-
+	// 将扫描请求内容写入文件
 	workingFolder, args, err := ts.putInputFile(request)
 	if err != nil {
 		log.WithFields(log.Fields{"err": err}).Error()
 		return nil, nil, err
 	}
-	args = append(args, "-cid", cid)	// reference only
+	args = append(args, "-cid", cid) // reference only
 
 	// remove working folder
-	defer os.RemoveAll(workingFolder)
+	//defer os.RemoveAll(workingFolder)
 
-	// log.WithFields(log.Fields{"cmd": ts.taskPath, "wpath": workingFolder, "args": args}).Debug()
-	//////
+	log.WithFields(log.Fields{"cmd---": ts.taskPath, "wpath---": workingFolder, "args---": args}).Info()
+
 	cmd := exec.Command(ts.taskPath, args...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
 	if ts.bShowDebug {
@@ -171,7 +171,7 @@ func (ts *Tasker) RunWithTimeout(request interface{}, cid string, timeout time.D
 		log.WithFields(log.Fields{"err": err}).Error()
 		return nil, nil, err
 	}
-	args = append(args, "-cid", cid)	// reference only
+	args = append(args, "-cid", cid) // reference only
 
 	// remove working folder
 	defer os.RemoveAll(workingFolder)
@@ -211,7 +211,7 @@ func (ts *Tasker) RunWithTimeout(request interface{}, cid string, timeout time.D
 				}
 			}
 		}
-	case <-time.After(timeout + time.Duration(10*time.Second)):	// Set a hard limit + 10 seconds
+	case <-time.After(timeout + time.Duration(10*time.Second)): // Set a hard limit + 10 seconds
 		ts.sys.RemoveToolProcess(pgid, true)
 		return nil, nil, fmt.Errorf("pathwalker: timeout")
 	}

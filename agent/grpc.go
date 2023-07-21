@@ -98,7 +98,7 @@ func (ss *ScanService) ScanGetFiles(ctx context.Context, req *share.ScanRunningR
 		Kernel:  Host.Kernel,
 		ObjType: req.Type,
 	}
-
+	// 主机、容器扫描目标数据获取
 	bytesValue, _, err := walkerTask.Run(taskReq, req.ID)
 	if err == nil {
 		if err = json.Unmarshal(bytesValue, &data); err != nil {
