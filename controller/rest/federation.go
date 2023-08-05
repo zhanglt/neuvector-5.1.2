@@ -76,6 +76,7 @@ const (
 
 const (
 	_tagJoinFed            = "join"
+	_tagJoinPending        = "pending"
 	_tagVerifyJointCluster = "verify"
 	_tagAuthJointCluster   = "auth"
 	_tagPingJointCluster   = "ping"
@@ -109,6 +110,7 @@ const (
 	_fedLicenseDisallowed     = 207  // do not change
 	_fedClusterPinging        = 208  // do not change
 	_fedClusterSyncing        = 209  // do not change
+	_fedClusterJoinPending    = 210  // do not change
 	_fedClusterNetworkError   = 300  // do not change. this state is not visible on UI
 	_fedClusterImporting      = 301  // do not change. this state is not visible on UI
 )
@@ -170,6 +172,7 @@ var _clusterStatusMap = map[int]string{
 	_fedLicenseDisallowed:     api.FedStatusLicenseDisallowed,
 	_fedClusterPinging:        api.FedStatusClusterPinging,
 	_fedClusterSyncing:        api.FedStatusClusterSyncing,
+	_fedClusterJoinPending:    api.FedStatusClusterPending,
 }
 
 var ibmSACfg share.CLUSIBMSAConfig
@@ -1090,8 +1093,12 @@ func updateClusterState(id, masterClusterID string, status int, cspUsage *share.
 		}
 	}
 	if cached.Status != status {
-		cached.Status = status
-		changed = true
+		if cached.Status == _fedClusterJoinPending && (status == _fedClusterLeft || status == _fedClusterDisconnected) {
+			// do not change joint cluster status
+		} else {
+			cached.Status = status
+			changed = true
+		}
 	}
 	if cspUsage != nil {
 		if cspUsage.CspType != cached.CspType || cspUsage.Nodes != cached.Nodes {
@@ -1197,6 +1204,10 @@ func pingJointCluster(tag, urlStr string, jointCluster share.CLUSFedJointCluster
 			cmdResp.result = _fedClusterNetworkError
 		}
 		time.Sleep(time.Second * 2)
+	}
+	if tag == _tagJoinPending && cmdResp.result == _fedClusterLeft {
+		// even the 1st ping for the joint cluster tells it's not in fed.
+		updateClusterState(id, "", _fedClusterJoinPending, nil, acc)
 	}
 	if ch != nil {
 		ch <- cmdResp
@@ -1652,6 +1663,7 @@ func handlerDemoteFromMaster(w http.ResponseWriter, r *http.Request, ps httprout
 	}
 
 	cacheFedEvent(share.CLUSEvFedDemote, "Demote from primary cluster", login.fullname, login.remote, login.id, login.domainRoles)
+	evqueue.Flush()
 	revertFedRoles(acc)
 	cleanFedRules()
 
@@ -1936,6 +1948,7 @@ func handlerLeaveFed(w http.ResponseWriter, r *http.Request, ps httprouter.Param
 
 			if err := clusHelper.PutFedMembership(m); err == nil {
 				cacheFedEvent(share.CLUSEvFedLeave, "Leave federation", login.fullname, login.remote, login.id, login.domainRoles)
+				evqueue.Flush()
 				go leaveFedCleanup(masterCluster.ID, jointCluster.ID)
 				restRespSuccess(w, r, nil, acc, login, nil, "Leave federation")
 				return
@@ -2146,6 +2159,8 @@ func handlerJoinFedInternal(w http.ResponseWriter, r *http.Request, ps httproute
 		_, resp.CspType = common.GetMappedCspType(nil, &cctx.CspType) // master cluster's billing csp type
 		msg := fmt.Sprintf("Cluster %s(%s) joins federation", joinedCluster.Name, joinedCluster.RestInfo.Server)
 		cacheFedEvent(share.CLUSEvFedJoin, msg, reqData.User, reqData.Remote, "", reqData.UserRoles)
+		jointCluster.ID = reqData.JointCluster.ID
+		go pingJointCluster(_tagJoinPending, "v1/fed/ping_internal", jointCluster, nil, access.NewAdminAccessControl())
 		restRespSuccess(w, r, &resp, nil, nil, nil, "Join federation by managed cluster's request")
 		return
 	} else {
@@ -2274,6 +2289,7 @@ func handlerJointKickedInternal(w http.ResponseWriter, r *http.Request, ps httpr
 	}
 	userName := fmt.Sprintf("%s (primary cluster)", login.mainSessionUser)
 	cacheFedEvent(share.CLUSEvFedKick, "Dimissed from federation", userName, login.remote, login.id, login.domainRoles)
+	evqueue.Flush()
 	go leaveFedCleanup(masterCluster.ID, jointCluster.ID)
 
 	// after being kicked out of federation, standalone NV reports its usage to CSP
