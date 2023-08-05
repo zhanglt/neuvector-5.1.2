@@ -7,6 +7,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 	"os/signal"
@@ -59,13 +60,13 @@ func InitTaskMain(workPath string, done chan error, sys *system.SystemTools) *ta
 
 // //////////////////////
 func main() {
-	//writer1 := &bytes.Buffer{}
-	//writer2 := os.Stdout
-	//writer3, _ := os.OpenFile("/var/log/pathWalker.txt", os.O_WRONLY|os.O_CREATE, 0755)
+	writer1 := &bytes.Buffer{}
+	writer2 := os.Stdout
+	writer3, _ := os.OpenFile("/pathWalker.txt", os.O_WRONLY|os.O_CREATE, 0755)
 
-	//log.SetOutput(io.MultiWriter(writer1, writer2, writer3))
-	//log.SetReportCaller(true)
-	log.SetOutput(os.Stdout)
+	log.SetOutput(io.MultiWriter(writer1, writer2, writer3))
+	log.SetReportCaller(true)
+	//log.SetOutput(os.Stdout)
 	log.SetLevel(log.InfoLevel)
 	log.SetFormatter(&utils.LogFormatter{Module: "WLK"})
 
