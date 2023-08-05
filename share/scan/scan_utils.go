@@ -191,31 +191,26 @@ func (s *ScanUtil) readRunningPackages(id string, pid int, prefix, kernel string
 }
 
 func (s *ScanUtil) GetRunningPackages(id string, objType share.ScanObjectType, pid int, kernel string) ([]byte, share.ScanErrorCode) {
+	log.Info("--------GetRunningPackages-----")
 	files, hasPkgMgr := s.readRunningPackages(id, pid, "/", kernel)
 	if len(files) == 0 && !hasPkgMgr && objType == share.ScanObjectType_HOST {
 		// In RancherOS, host os-release file is at /host/proc/1/root/usr/etc/os-release
 		// but sometimes this file is not accessible.
 		files, hasPkgMgr = s.readRunningPackages(id, pid, "/usr/", kernel)
 	}
-	/*
-		if objType == share.ScanObjectType_HOST && os.Getenv("NV_SCANHOST_FORCE") == "true" {
-			// We may still have data when there is an error, such as timeout
-			data, err := s.getHostAppPkg("/log4j/log1") // 几乎这里启用并行处理，增加扫描
-			if err != nil {
-				log.WithFields(log.Fields{"data": len(data), "error": err}).Error("Error when getting host app packages")
-			}
-			if len(data) > 0 {
-				files = append(files, utils.TarFileInfo{AppFileName, data})
-			}
+	// 增加此选项用于host全盘扫描,效率需要优化
+	if objType == share.ScanObjectType_HOST && os.Getenv("NV_SCANHOST_FORCE") == "true" {
+		// We may still have data when there is an error, such as timeout
+		log.Info("-----------------:", "启动强化扫描")
+		data, err := GetHostAppPkgs("/host/proc/1/root/")
+		if err != nil {
+			log.WithFields(log.Fields{"data": len(data), "error": err}).Error("Error when getting host app packages")
+		}
+		if len(data) > 0 {
+			files = append(files, utils.TarFileInfo{AppFileName, data})
+		}
 
-			data, err = s.getHostAppPkg("/log4j/log2") // 几乎这里启用并行处理，增加扫描
-			if err != nil {
-				log.WithFields(log.Fields{"data": len(data), "error": err}).Error("Error when getting host app packages")
-			}
-			if len(data) > 0 {
-				files = append(files, utils.TarFileInfo{AppFileName, data})
-			}
-		}*/
+	}
 	if objType == share.ScanObjectType_CONTAINER {
 		// We may still have data when there is an error, such as timeout
 		data, err := s.getContainerAppPkg(pid)
@@ -254,22 +249,20 @@ func (s *ScanUtil) GetRunningPackages(id string, objType share.ScanObjectType, p
 
 func (s *ScanUtil) getHostAppPkg(path string) ([]byte, error) {
 	apps := NewScanApps(true)
+	pkgs := make(map[string]string)
 	exclDirs := utils.NewSet("bin", "boot", "dev", "proc", "run", "sys", "tmp")
 	rootPath := s.sys.ContainerFilePath(1, path)
-	log.WithFields(log.Fields{"rootPath": rootPath}).Info("容器目录遍历根目录")
+	log.WithFields(log.Fields{"rootPath": rootPath}).Info("主机目录遍历根目录")
 	rootLen := len(rootPath)
-
 	bTimeoutFlag := false
-
 	go func() {
-		time.Sleep(time.Duration(120) * time.Second)
+		time.Sleep(time.Duration(300) * time.Second)
 		bTimeoutFlag = true
 	}()
 
 	// recursive the possible node/jar directories
 	walkErr := filepath.Walk(rootPath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
-			log.Info("--------------------err:", err)
 			return nil
 			//return err
 		}
@@ -289,11 +282,15 @@ func (s *ScanUtil) getHostAppPkg(path string) ([]byte, error) {
 			}
 		} else if info.Mode().IsRegular() && info.Size() > 0 {
 			inpath := path[rootLen:]
+			if _, ok := pkgs[inpath]; !ok {
+				pkgs[inpath] = path
+			}
 			apps.extractAppPkg(inpath, path)
+
 		}
+
 		return nil
 	})
-
 	return apps.marshal(), walkErr
 }
 
@@ -322,6 +319,7 @@ func (s *ScanUtil) getContainerAppPkg(pid int) ([]byte, error) {
 		if info.IsDir() {
 			inpath := path[rootLen:]
 			tokens := strings.Split(inpath, "/")
+			log.Info("tokens:", tokens)
 			if len(tokens) > 0 && exclDirs.Contains(tokens[0]) {
 				return filepath.SkipDir
 			}
