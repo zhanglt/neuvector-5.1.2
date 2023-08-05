@@ -77,10 +77,9 @@ require (
 	github.com/russellhaering/goxmldsig v1.1.1
 	github.com/samalba/dockerclient v0.0.0-20160531175551-a30362618471
 	github.com/sirupsen/logrus v1.8.1
-	github.com/smirzaei/parallel v1.1.0
 	github.com/spaolacci/murmur3 v0.0.0-20180118202830-f09979ecbc72
 	github.com/streadway/simpleuuid v0.0.0-20130420165545-6617b501e485
-	github.com/stretchr/testify v1.7.1
+	github.com/stretchr/testify v1.7.0
 	github.com/vishvananda/netlink v1.1.0
 	github.com/vishvananda/netns v0.0.0-20211101163701-50045581ed74
 	golang.org/x/net v0.0.0-20220722155237-a158d28d115b

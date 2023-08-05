@@ -317,9 +317,6 @@ github.com/samalba/dockerclient
 # github.com/sirupsen/logrus v1.8.1
 ## explicit
 github.com/sirupsen/logrus
-# github.com/smirzaei/parallel v1.1.0
-## explicit
-github.com/smirzaei/parallel
 # github.com/spaolacci/murmur3 v0.0.0-20180118202830-f09979ecbc72
 ## explicit
 github.com/spaolacci/murmur3
@@ -328,7 +325,7 @@ github.com/spaolacci/murmur3
 github.com/streadway/simpleuuid
 # github.com/stretchr/objx v0.2.0
 github.com/stretchr/objx
-# github.com/stretchr/testify v1.7.1
+# github.com/stretchr/testify v1.7.0
 ## explicit
 github.com/stretchr/testify/assert
 github.com/stretchr/testify/mock
